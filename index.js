@@ -62,4 +62,5 @@ module.exports = {
   accessibilitySettings,
   applicationSettings,
   deviceInfoSettings,
+  notificationSettings,
 }
