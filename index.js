@@ -40,6 +40,8 @@ const applicationSettings = () => RNAndroidOpenSettings.applicationSettings()
 
 const deviceInfoSettings = () => RNAndroidOpenSettings.deviceInfoSettings()
 
+const notificationSettings = () => RNAndroidOpenSettings.notificationSettings()
+
 module.exports = {
   generalSettings,
   homeSettings,
