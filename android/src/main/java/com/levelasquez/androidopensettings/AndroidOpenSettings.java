@@ -8,6 +8,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import android.os.Build.VERSION;
 
 public class AndroidOpenSettings extends ReactContextBaseJavaModule {
 
@@ -209,6 +210,22 @@ public class AndroidOpenSettings extends ReactContextBaseJavaModule {
         Intent intent = new Intent(Settings.ACTION_DEVICE_INFO_SETTINGS);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        if (intent.resolveActivity(reactContext.getPackageManager()) != null) {
+            reactContext.startActivity(intent);
+        }
+    }
+
+    @ReactMethod
+    public void notificationSettings() {
+        Intent intent = new Intent("android.settings.APP_NOTIFICATION_SETTINGS");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        if(VERSION.SDK_INT >= 21 && VERSION.SDK_INT <26){
+            intent.putExtra("app_package", reactContext.getPackageName());
+            intent.putExtra("app_uid", reactContext.getApplicationInfo().uid);
+        }else if(VERSION.SDK_INT >= 26){
+            intent.putExtra("android.provider.extra.APP_PACKAGE", reactContext.getPackageName());
+        }
         if (intent.resolveActivity(reactContext.getPackageManager()) != null) {
             reactContext.startActivity(intent);
         }
